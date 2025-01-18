@@ -1,0 +1,75 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  static-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: egor00f/install-kolibrios-toolchain-action@v1.1
+
+    - name: Install newlib
+      run: sudo apt install kos-newlib
+    
+    - name: make
+      run: make libpixman-1.a
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: static-build
+        path: ./contrib/sdk/sources/pixman/libpixman-1.a
+
+  shared-build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: egor00f/install-kolibrios-toolchain-action@v1.1
+
+    - name: Install newlib
+      run: sudo apt install kos-newlib
+    
+    - name: make
+      run: make pixman-1.dll
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: static-build
+        path: |
+          ./contrib/sdk/sources/pixman/libpixman-1.dll.a
+          ./contrib/sdk/sources/pixman/pixman-1.dll
+
+  pacakage-build:
+
+    runs-on: ubuntu-latest
+
+    needs: [static-build, shared-build]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: egor00f/install-kolibrios-toolchain-action@v1.1
+
+    - name: Install newlib
+      run: sudo apt install kos-newlib
+    
+    - name: make
+      run: make kos-pixman-dev
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: package-build
+        path: kos-pixman-dev.deb
