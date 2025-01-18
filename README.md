@@ -1,15 +1,15 @@
 # zlib for kolibrios
 
-This is zlib from kolibrios repository.
+This is pixman library from kolibrios repository.
 
 ## Build
 
 static library:
 ```
-make zlib.a
+make libpixman-1.a
 ```
 
 shared library:
 ```
-make zlib.dll
+make pixman-1.dll
 ```
