@@ -3,6 +3,10 @@ name: Build
 on:
   push:
     branches: [ "main" ]
+  paths:
+     - 'contrib/**'
+     - 'Makefile'
+     - 'kos-pixman-dev'
   pull_request:
     branches: [ "main" ]
 
@@ -46,7 +50,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: static-build
+        name: shared-build
         path: |
           ./contrib/sdk/sources/pixman/libpixman-1.dll.a
           ./contrib/sdk/sources/pixman/pixman-1.dll
