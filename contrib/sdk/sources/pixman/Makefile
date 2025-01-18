@@ -68,15 +68,17 @@ ebox:$lib(LIBRARY).a $(LIBRARY).dll
 
 lib$(LIBRARY).a: $(OBJECTS) Makefile
 	$(AR) $(ARFLAGS) lib$(LIBRARY).a $(OBJECTS)
-	mv -f lib$(LIBRARY).a $(INSTALLDIR)
 
 $(LIBRARY).dll: $(LIBRARY).def $(OBJECTS) Makefile
 	$(LD) $(LDFLAGS) -o $@ $(LIBRARY).def $(OBJECTS) $(LIBS)
+
+
+install: lib$(LIBRARY).a $(LIBRARY).dll
+	mv -f lib$(LIBRARY).a $(INSTALLDIR)
 	#sed -f ../newlib/cmd1.sed $(LIBRARY).def > mem
 	#sed -f ../newlib/cmd2.sed mem >$(LIBRARY).inc
 	mv -f $@ ../../bin
 	mv -f lib$(LIBRARY).dll.a $(INSTALLDIR)
-	
 
 %.o : %.c Makefile
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $@ $<
