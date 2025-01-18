@@ -3,10 +3,10 @@ name: Build
 on:
   push:
     branches: [ "main" ]
-  paths:
-     - 'contrib/**'
-     - 'Makefile'
-     - 'kos-pixman-dev'
+    paths:
+      - 'contrib/**'
+      - 'Makefile'
+      - 'kos-pixman-dev/**'
   pull_request:
     branches: [ "main" ]
 
@@ -23,7 +23,7 @@ jobs:
     - name: Install newlib
       run: sudo apt install kos-newlib
     
-    - name: make
+    - name: Build
       run: make libpixman-1.a
 
     - name: Upload artifact
@@ -44,7 +44,7 @@ jobs:
     - name: Install newlib
       run: sudo apt install kos-newlib
     
-    - name: make
+    - name: Build
       run: make pixman-1.dll
 
     - name: Upload artifact
@@ -69,7 +69,7 @@ jobs:
     - name: Install newlib
       run: sudo apt install kos-newlib
     
-    - name: make
+    - name: Build
       run: make kos-pixman-dev
 
     - name: Upload artifact
