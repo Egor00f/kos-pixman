@@ -13,3 +13,8 @@ shared library:
 ```
 make pixman-1.dll
 ```
+
+package:
+```
+make kos-pixman-dev
+```
